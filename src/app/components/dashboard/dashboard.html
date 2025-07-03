@@ -1,0 +1,120 @@
+<div class="dashboard-container">
+  <!-- Toolbar -->
+  <mat-toolbar color="primary">
+    <mat-icon>fitness_center</mat-icon>
+    <span class="toolbar-title">GymChain</span>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <div class="welcome-section">
+      <h1>Dashboard</h1>
+      <p>Bem-vindo ao seu painel de controle do GymChain</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-content">
+            <div class="stat-icon">
+              <mat-icon>fitness_center</mat-icon>
+            </div>
+            <div class="stat-info">
+              <h3>{{ totalWorkouts }}</h3>
+              <p>Total de Treinos</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-content">
+            <div class="stat-icon">
+              <mat-icon>sports_gymnastics</mat-icon>
+            </div>
+            <div class="stat-info">
+              <h3>{{ totalExercises }}</h3>
+              <p>Exercícios Disponíveis</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-content">
+            <div class="stat-icon">
+              <mat-icon>star</mat-icon>
+            </div>
+            <div class="stat-info">
+              <h3>{{ totalHpEarned }}</h3>
+              <p>HP Ganhos</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions-section">
+      <h2>Ações Rápidas</h2>
+      <div class="actions-grid">
+        <mat-card class="action-card" (click)="navigateToWorkouts()">
+          <mat-card-content>
+            <mat-icon>fitness_center</mat-icon>
+            <h3>Treinos</h3>
+            <p>Gerenciar seus treinos</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card" (click)="navigateToExercises()">
+          <mat-card-content>
+            <mat-icon>sports_gymnastics</mat-icon>
+            <h3>Exercícios</h3>
+            <p>Biblioteca de exercícios</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card" (click)="navigateToUsers()">
+          <mat-card-content>
+            <mat-icon>people</mat-icon>
+            <h3>Usuários</h3>
+            <p>Gerenciar usuários</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Recent Workouts -->
+    <div class="recent-section" *ngIf="recentWorkouts.length > 0">
+      <h2>Treinos Recentes</h2>
+      <div class="workouts-list">
+        <mat-card *ngFor="let workout of recentWorkouts" class="workout-card">
+          <mat-card-content>
+            <div class="workout-info">
+              <h4>Treino do dia {{ workout.workoutDate | date:'dd/MM/yyyy' }}</h4>
+              <p>Duração: {{ workout.durationMinutes }} minutos</p>
+              <p *ngIf="workout.notes">{{ workout.notes }}</p>
+              <div class="workout-stats">
+                <span class="hp-badge">{{ workout.totalHpEarned || 0 }} HP</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
